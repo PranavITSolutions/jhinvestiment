@@ -134,5 +134,37 @@ namespace JH_INV_WEBAPI.Repository
         }
 
 
+        
+                public static dynamic getCustomerRecords()
+        {
+            try
+            {
+                var query = from d in client.CreateDocumentQuery<Research>(UriFactory.CreateDocumentCollectionUri(database, collection))
+                            select d;
+        
+                return query.ToList().GroupBy(x => new { x.TICKER, x.Customer_Name, x.Research_Industry, x.Research_Sector, x.Email, x.ResearchTeam,
+                x.UPDATE_TS, x.Source, x.ResearchSector})
+                    .Select(y => new
+                    {
+                        //securityLongDesc= y.Key.SECURITY_LONG_DESC,
+                        researchIndustry = y.Key.Research_Industry,
+                        reasearch_Sector =y.Key.Research_Sector,
+                        customerName = y.Key.Customer_Name,                        
+                        researchTeam=y.Key.ResearchTeam,
+                        researchSector = y.Key.ResearchSector,
+                        ticker = y.Key.TICKER,
+                        email = y.Key.Email,
+                        lastUpdatedDate= y.Key.UPDATE_TS,
+                        source= y.Key.Source,
+                        score = y.ToList().Select(s => s.Sentiment_Score).Average()
+                    }
+                    );
+            }
+            catch (Exception exception)
+            {
+                Debug.WriteLine("Error querying index: {0}\r\n", exception.Message.ToString());
+                throw exception;
+            }
+        }
     }
 }

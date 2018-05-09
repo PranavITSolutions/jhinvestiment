@@ -92,5 +92,21 @@ namespace JH_INV_WEBAPI.Controllers
             return response;
         }
 
+
+        [Route("api/get/customer/analytics")]
+        public async Task<HttpResponseMessage> GetCustomerRecords()
+        {
+            HttpResponseMessage response = null;
+            try
+            {
+                response = Request.CreateResponse(HttpStatusCode.OK, new JHResponseMessage("JH_001", "Success", ResearchRepo.getCustomerRecords()));
+            }
+            catch (Exception exception)
+            {
+                Debug.WriteLine(exception.GetBaseException());
+                response = Request.CreateResponse(HttpStatusCode.InternalServerError, new JHResponseMessage("JH_101", "Application Error", exception.Message));
+            }
+            return response;
+        }
     }
 }

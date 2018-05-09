@@ -134,8 +134,8 @@ namespace JH_INV_WEBAPI.Repository
         }
 
 
-        
-                public static dynamic getCustomerRecords()
+        //new method added
+       public static dynamic getCustomerRecords()
         {
             try
             {

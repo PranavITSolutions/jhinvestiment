@@ -92,7 +92,7 @@ namespace JH_INV_WEBAPI.Controllers
             return response;
         }
 
-
+        //new action method added
         [Route("api/get/customer/analytics")]
         public async Task<HttpResponseMessage> GetCustomerRecords()
         {

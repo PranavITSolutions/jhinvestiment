@@ -366,18 +366,19 @@ namespace JH_INV_WEBAPI.ChatDialogs
             {
                 Title = message,
                 Buttons = new List<CardAction> {
-                    new CardAction(ActionTypes.ImBack, title: Constants.ACTION_CHECK_STOCK_PERFORMANCE, value: Constants.ACTION_CHECK_STOCK_PERFORMANCE),
-                    new CardAction(ActionTypes.ImBack, title: Constants.ACTION_CHECK_ANALYST_PERFORMANCE, value: Constants.ACTION_CHECK_ANALYST_PERFORMANCE),
+                     new CardAction(ActionTypes.ImBack, title: Constants.ACTION_CHECK_STOCK_PERFORMANCE, value: Constants.ACTION_CHECK_STOCK_PERFORMANCE),
+                     new CardAction(ActionTypes.ImBack, title: Constants.ACTION_CHECK_ANALYST_PERFORMANCE, value: Constants.ACTION_CHECK_ANALYST_PERFORMANCE),
                      new CardAction(ActionTypes.ImBack, title: Constants.ACTION_HIGH_PERFORMING_STOCKS, value: Constants.ACTION_HIGH_PERFORMING_STOCKS),
-                    new CardAction(ActionTypes.ImBack, title: Constants.ACTION_STOCKS_TO_FOCUS, value: Constants.ACTION_STOCKS_TO_FOCUS),
+                     new CardAction(ActionTypes.ImBack, title: Constants.ACTION_STOCKS_TO_FOCUS, value: Constants.ACTION_STOCKS_TO_FOCUS),
+                     new CardAction(ActionTypes.ImBack, Constants.ACTION_GET_MARKET_INSIGHTS, value: Constants.ACTION_GET_MARKET_INSIGHTS),
+                     new CardAction(ActionTypes.ImBack, Constants.ACTION_INVESTING_GUIDE, value: Constants.ACTION_INVESTING_GUIDE),
                     //new CardAction(ActionTypes.ImBack, title: Constants.ACTION_GET_PERFORMANCE, value: Constants.ACTION_GET_PERFORMANCE),
                     //new CardAction(ActionTypes.ImBack, Constants.ACTION_GET_PRICING, value: Constants.ACTION_GET_PRICING),
                     //new CardAction(ActionTypes.ImBack, Constants.ACTION_GET_RATING, value: Constants.ACTION_GET_RATING),
                     new CardAction(ActionTypes.ImBack, title: Constants.ACTION_GET_FACTSHEET, value: Constants.ACTION_GET_FACTSHEET),
                     new CardAction(ActionTypes.ImBack, Constants.ACTION_GET_PORTFOLIO, value: Constants.ACTION_GET_PORTFOLIO),
                     new CardAction(ActionTypes.ImBack, Constants.ACTION_GET_REPORT, value: Constants.ACTION_GET_REPORT),
-                    new CardAction(ActionTypes.ImBack, Constants.ACTION_GET_HOLDING, value: Constants.ACTION_GET_HOLDING),
-                    new CardAction(ActionTypes.ImBack, Constants.ACTION_GET_MARKET_INSIGHTS, value: Constants.ACTION_GET_MARKET_INSIGHTS)
+                    new CardAction(ActionTypes.ImBack, Constants.ACTION_GET_HOLDING, value: Constants.ACTION_GET_HOLDING)
                 }
             };
             var reply = context.MakeMessage();
@@ -1270,6 +1271,10 @@ namespace JH_INV_WEBAPI.ChatDialogs
                         case Constants.INTENT_INVESTING_GUIDE:
                             isIntentMatched = true;
                             await this.JHInvestingGuideIntent(context, null);
+                            break;
+                        case Constants.INTENT_MARKET_INSIGHTS:
+                            isIntentMatched = true;
+                            await this.MarketInsightsIntent(context, null);
                             break;
                             //case Constants.INTENT_THANK:
                             //    isIntentMatched = true;

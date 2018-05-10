@@ -35,6 +35,7 @@ namespace JH_INV_WEBAPI.Utility
         public const string INTENT_HIGH_PERFORMING_STOCKS = "HighPerformingStock";
         public const string INTENT_STOCKS_TO_FOCUS = "StockToFocus";
         public const string INTENT_INVESTING_GUIDE = "JHInvestingGuide";
+        public const string INTENT_MARKET_INSIGHTS = "MarketInsights";
 
         public const string INTENT_THANK = "Thank";
         public const string INTENT_BYE = "Bye";

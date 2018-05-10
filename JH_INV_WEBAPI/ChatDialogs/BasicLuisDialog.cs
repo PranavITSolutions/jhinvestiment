@@ -1054,7 +1054,7 @@ namespace JH_INV_WEBAPI.ChatDialogs
             {
                 new CardAction()
                 {
-                    Title = "Open in youtube",
+                    Title = "Open in YouTube",
                     Type = ActionTypes.OpenUrl,
                     Value = "https://www.youtube.com/watch?v=cSdsDrOxn2g"
                 }
@@ -1069,6 +1069,50 @@ namespace JH_INV_WEBAPI.ChatDialogs
                 await this.ShowLuisResult(context, "Bot returning an error. Please check later. Sorry!");
             }
         }
+
+        [LuisIntent("JHInvestingGuide")]
+        public async Task JHInvestingGuideIntent(IDialogContext context, LuisResult result)
+        {
+            try
+            {
+                var message = context.MakeMessage();
+                message.Attachments = new List<Attachment>();
+                message.Attachments.Add(new VideoCard
+                {
+                    Title = "Janus Henderson - Steps to investing guide",
+                    // Subtitle = "by the Blender Institute",
+                    Text = "This Janus Henderson guide takes you through the steps required to purchase an investment trust, and reminds you of points to consider before investing, and explains the different types of investment strategies, inviting you to consider the most appropriate one for you.",
+                    //Image = new ThumbnailUrl
+                    //{
+                    //    Url = System.Web.HttpContext.Current.Server.MapPath("~/ App_Data / Images / Cisco_logo.png")
+                    //},
+                    Media = new List<MediaUrl>
+            {
+                new MediaUrl()
+                {
+                    Url = "https://www.youtube.com/watch?v=S1_GLOJxLEc"
+                }
+            },
+                    Buttons = new List<CardAction>
+            {
+                new CardAction()
+                {
+                    Title = "Open in YouTube",
+                    Type = ActionTypes.OpenUrl,
+                    Value = "https://www.youtube.com/watch?v=S1_GLOJxLEc"
+                }
+            }
+                }.ToAttachment()
+            );
+                await context.PostAsync(message);
+
+            }
+            catch (Exception)
+            {
+                await this.ShowLuisResult(context, "Bot returning an error. Please check later. Sorry!");
+            }
+        }
+
 
 
 
@@ -1099,7 +1143,7 @@ namespace JH_INV_WEBAPI.ChatDialogs
             {
                 new CardAction()
                 {
-                    Title = "Open in youtube",
+                    Title = "Open in YouTube",
                     Type = ActionTypes.OpenUrl,
                     Value = "https://www.youtube.com/watch?v=Fgr_nKi0Hqg"
                 }
@@ -1129,7 +1173,7 @@ namespace JH_INV_WEBAPI.ChatDialogs
             {
                 new CardAction()
                 {
-                    Title = "Open in youtube",
+                    Title = "Open in YouTube",
                     Type = ActionTypes.OpenUrl,
                     Value = "https://www.youtube.com/watch?v=IHECseRaoMU"
                 }
@@ -1174,7 +1218,7 @@ namespace JH_INV_WEBAPI.ChatDialogs
             {
                 new CardAction()
                 {
-                    Title = "Open in youtube",
+                    Title = "Open in YouTube",
                     Type = ActionTypes.OpenUrl,
                     Value = "https://www.youtube.com/watch?v=NtGurwqLFmw"
                 }
@@ -1206,14 +1250,35 @@ namespace JH_INV_WEBAPI.ChatDialogs
                             isIntentMatched = true;
                             await this.GreetingIntent(context, null);
                             break;
-                        case Constants.INTENT_THANK:
+
+                        case Constants.INTENT_CHECK_STOCK_PERFORMANCE:
                             isIntentMatched = true;
-                            await this.ShowLuisResult(context, "Happy to help!");
+                            await this.CheckStockPerformanceIntent(context, null);
                             break;
-                        case Constants.INTENT_BYE:
+                        case Constants.INTENT_CHECK_ANALYST_PERFORMANCE:
                             isIntentMatched = true;
-                            await this.ShowLuisResult(context, "Bye! See you soon.");
+                            await this.CheckAnalystPerformanceIntent(context, null);
                             break;
+                        case Constants.INTENT_HIGH_PERFORMING_STOCKS:
+                            isIntentMatched = true;
+                            await this.HighPerformingStockIntent(context, null);
+                            break;
+                        case Constants.INTENT_STOCKS_TO_FOCUS:
+                            isIntentMatched = true;
+                            await this.StockToFocusIntent(context, null);
+                            break;
+                        case Constants.INTENT_INVESTING_GUIDE:
+                            isIntentMatched = true;
+                            await this.JHInvestingGuideIntent(context, null);
+                            break;
+                            //case Constants.INTENT_THANK:
+                            //    isIntentMatched = true;
+                            //    await this.ShowLuisResult(context, "Happy to help!");
+                            //    break;
+                            //case Constants.INTENT_BYE:
+                            //    isIntentMatched = true;
+                            //    await this.ShowLuisResult(context, "Bye! See you soon.");
+                            //    break;
                     }
                 }
                 else

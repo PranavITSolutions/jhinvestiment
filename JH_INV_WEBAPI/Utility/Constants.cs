@@ -18,6 +18,8 @@ namespace JH_INV_WEBAPI.Utility
 
         public const string ACTION_STOCKS_TO_FOCUS = "Stocks To Focus";
 
+        public const string ACTION_INVESTING_GUIDE = "JH Investing Guide";
+
         public static List<String> ACTION_CHECK_SCORE_OPTIONS = new List<string> { "Ticker", "Analyst"};
         public static List<String> CONFIRMATION_OPTIONS = new List<string> { "Yes", "No" };
 
@@ -29,8 +31,11 @@ namespace JH_INV_WEBAPI.Utility
 
         public const string INTENT_GREETING = "Greeting";
         public const string INTENT_CHECK_STOCK_PERFORMANCE = "CheckStockPerformance";
-
         public const string INTENT_CHECK_ANALYST_PERFORMANCE = "CheckAnalystPerformance";
+        public const string INTENT_HIGH_PERFORMING_STOCKS = "HighPerformingStock";
+        public const string INTENT_STOCKS_TO_FOCUS = "StockToFocus";
+        public const string INTENT_INVESTING_GUIDE = "JHInvestingGuide";
+
         public const string INTENT_THANK = "Thank";
         public const string INTENT_BYE = "Bye";
         public const string INTENT_NONE = "None";

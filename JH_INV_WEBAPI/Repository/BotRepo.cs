@@ -26,7 +26,7 @@ namespace JH_INV_WEBAPI.Repository
             {
                 using (IDbConnection db = new SqlConnection(ConfigurationManager.ConnectionStrings[Constants.DB_CONNECTION_STR_NAME].ConnectionString))
                 {
-                    string query = " SELECT * FROM finance_data_bot WHERE ticker = @ticker";
+                    string query = " SELECT * FROM finance WHERE ticker = @ticker";
                     return db.Query<FinanceModel>(query, new { ticker = ticker }).FirstOrDefault();
                 }
             }
@@ -44,7 +44,7 @@ namespace JH_INV_WEBAPI.Repository
             {
                 using (IDbConnection db = new SqlConnection(ConfigurationManager.ConnectionStrings[Constants.DB_CONNECTION_STR_NAME].ConnectionString))
                 {
-                    string query = " SELECT * FROM finance_data_bot";
+                    string query = " SELECT * FROM finance";
                     return db.Query<FinanceModel>(query).ToList();
                 }
             }
@@ -65,7 +65,7 @@ namespace JH_INV_WEBAPI.Repository
             {
                 using (IDbConnection db = new SqlConnection(ConfigurationManager.ConnectionStrings[Constants.DB_CONNECTION_STR_NAME].ConnectionString))
                 {
-                    string query = " SELECT * FROM finance_data_bot WHERE name like '%" + name + "%'";
+                    string query = " SELECT * FROM finance WHERE name like '%" + name + "%'";
                     return db.Query<FinanceModel>(query).FirstOrDefault();
                 }
             }
@@ -101,7 +101,7 @@ namespace JH_INV_WEBAPI.Repository
                         stockName = y.Key.Customer_Name,
                         researchIndustry = y.Key.Research_Industry,
                         researchSector = y.Key.Research_Sector,
-                        //  re = y.ToList().Count(),
+                        researchCount = y.ToList().Count(),
                         sentimentScore = y.ToList().Select(s => s.Sentiment_Score).Average()
                     }
                     ).FirstOrDefault();

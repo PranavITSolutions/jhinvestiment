@@ -187,17 +187,19 @@ namespace JH_INV_WEBAPI.ChatDialogs
                 string ticker = await result;
                 if (ticker != null)
                 {
+                    await context.PostAsync("Checking performance for Ticker " + ticker);
                     // Get customer's Info and return
-                    ResearchDTO research = BotRepo.getCustomer(ticker);              
+                    ResearchDTO research = BotRepo.getCustomer(ticker.ToUpper());              
                     if (research != null )
                     {
                         var message = context.MakeMessage();
                         List<string> dataList = new List<string>();
 
-                        dataList.Add("Stock : " + research.stockName + "<br>");
-                        dataList.Add("Research Industry : " + research.researchIndustry + ",<br>");
-                        dataList.Add("Research sector : " + research.researchSector + ",<br>");
-                        dataList.Add("Overall Sentiment Score : " + String.Format("{0:0.##}", research.sentimentScore.Value) + "<br>");
+                        dataList.Add("Stock : " + research.stockName + ",<br>  ");
+                        dataList.Add("Research Industry : " + research.researchIndustry + ",<br>     ");
+                        dataList.Add("Research Sector : " + research.researchSector + ",<br>      ");
+                        dataList.Add("Total Research Count : " + research.researchCount + ",<br>     ");
+                        dataList.Add("Overall Sentiment Score : " + String.Format("{0:0.##}", research.sentimentScore.Value) + "  ");
 
                         HeroCard card = new HeroCard()
                         {
@@ -207,7 +209,22 @@ namespace JH_INV_WEBAPI.ChatDialogs
 
                         message.Attachments.Add(card.ToAttachment());
                         await context.PostAsync(message);
-                    }                  
+                        PromptDialog.Choice<string>(context, ResumeAfterCustomerCheckConfirmation,
+                                       new PromptOptions<string>("Would you like to check for another Stock?",
+                                       "Selected action not available. Please choose another.", "Let me get you there...",
+                                       Constants.CONFIRMATION_OPTIONS, 0));
+                    }
+                    else
+                    {
+                        Boolean isIntentMatched = await this.CheckForIntent(context);
+                        if (!isIntentMatched)
+                        {
+                            PromptDialog.Choice<string>(context, ResumeAfterCustomerCheckConfirmation,
+                                           new PromptOptions<string>("Invalid Ticker. Would you like to check for another Stock?",
+                                           "Selected action not available. Please choose another.", "Let me get you there...",
+                                           Constants.CONFIRMATION_OPTIONS, 0));
+                        }
+                    }
                 }
                 else
                 {
@@ -215,7 +232,7 @@ namespace JH_INV_WEBAPI.ChatDialogs
                     if (!isIntentMatched)
                     {
                         PromptDialog.Choice<string>(context, ResumeAfterCustomerCheckConfirmation,
-                                       new PromptOptions<string>("Invalid Ticker. Would you like to check for another ticker?",
+                                       new PromptOptions<string>("Invalid Ticker. Would you like to check for another Stock?",
                                        "Selected action not available. Please choose another.", "Let me get you there...",
                                        Constants.CONFIRMATION_OPTIONS, 0));
                     }
@@ -264,18 +281,30 @@ namespace JH_INV_WEBAPI.ChatDialogs
                 string analystName = await result;
                 if (analystName != null)
                 {
+                    await context.PostAsync("Checking performance for Analyst "+analystName);
                     ResearchDTO research = BotRepo.getAnalyst(analystName);
 
                     if (research != null)
                     { 
                         var message = context.MakeMessage();
                         List<string> dataList = new List<string>();
-                        dataList.Add("Analyst name : " + research.source + "<br>");
+                        dataList.Add("Analyst Name : " + research.source + "<br>");
                         dataList.Add("Analyst Email : " + research.email + ",<br>");
-                        dataList.Add("Research sector : " + research.researchSector + ",<br>");
-                        dataList.Add("Research count : " + research.researchCount + ",<br>");
-                        dataList.Add("Sentiment Score : " + String.Format("{0:0.##}", research.sentimentScore.Value) + "<br>");
-                        await context.PostAsync(string.Join("     ", dataList));
+                        dataList.Add("Research Sector : " + research.researchSector + ",<br>");
+                        dataList.Add("Research Count : " + research.researchCount + ",<br>");
+                        dataList.Add("Sentiment Score : " + String.Format("{0:0.##}", research.sentimentScore.Value) + "<br>");                     
+                        HeroCard card = new HeroCard()
+                        {
+                            Title = "Performance of Analyst " + analystName,
+                            Text = string.Join("     ", dataList)
+                        };
+
+                        message.Attachments.Add(card.ToAttachment());
+                        await context.PostAsync(message);
+                        PromptDialog.Choice<string>(context, ResumeAfterAgentCheckConfirmation,
+                                           new PromptOptions<string>("Would you like to check for another Analyst?",
+                                           "Selected action not available. Please choose another.", "Let me get you there...",
+                                           Constants.CONFIRMATION_OPTIONS, 0));
                     }
                     else
                     {

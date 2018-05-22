@@ -20,7 +20,12 @@ namespace JH_INV_WEBAPI.Models
         public string researchTeam { get; set; }
         public string category { get; set; }
         public int researchCount { get; set; }
+
+        public int performance { get; set; }
         public decimal? sentimentScore { get; set; }
+
+        public decimal? internalSentimentScore { get; set; }
+        public decimal? externalSentimentScore { get; set; }
 
     }
 }
